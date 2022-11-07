@@ -11,8 +11,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <link rel='stylesheet' href='./css/pixel.css'>
-        <!-- Google Font-->
-        <link href="//fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
         <!-- Font Awesome-->
         <link rel="stylesheet" href="./css/academicons.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -28,7 +26,69 @@
         <!-- Custom CSS-->
         <link rel="stylesheet" href="./css/styles.css">
         <link rel="stylesheet" href="./css/responsive.css">
+        <link rel="stylesheet" type="text/css" href="./css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="./css/buttons.dataTables.min.css">
 
+        <script type="text/javascript" charset="utf8" src="./js/jquery-3.6.1.js"></script>
+        <script type="text/javascript" charset="utf8" src="./js/jquery.dataTables.js"></script>
+        <script type="text/javascript" charset="utf8" src="./js/dataTables.buttons.min.js"></script>
+
+        <script type="text/javascript" class="init">
+            $(document).ready( function () {
+                var table = $('#table_id').DataTable({
+                    order: [[1, 'desc']],
+                    pagingType: 'full_numbers',
+                    dom: 'Blrtip',
+                    lengthMenu: [
+                        [4, 10, -1],
+                        [4, 10, 'All']
+                    ],
+                    buttons: [
+                    {
+                        text: "All categories",
+                    },
+                    {
+                        text: "Journal publications",
+                    },
+                    {
+                        text: "Conference proceedings",
+                    },
+                    {
+                        text: "Clinical studies and trials",
+                    }
+                    ]
+                });
+                table.button( 0 ).action( function (e, dt, node, config) {
+                    dt.column(0).search("").draw();
+                    this.active( true );
+                    table.button( 1 ).active( false );
+                    table.button( 2 ).active( false );
+                    table.button( 3 ).active( false );
+                } );
+                table.button( 1 ).action( function (e, dt, node, config) {
+                    dt.column(0).search("Journal publications").draw();
+                    this.active( true );
+                    table.button( 0 ).active( false );
+                    table.button( 2 ).active( false );
+                    table.button( 3 ).active( false );
+                } );
+                table.button( 2 ).action( function (e, dt, node, config) {
+                    dt.column(0).search("Conference proceedings").draw();
+                    this.active( true );
+                    table.button( 0 ).active( false );
+                    table.button( 1 ).active( false );
+                    table.button( 3 ).active( false );
+                } );
+                table.button( 3 ).action( function (e, dt, node, config) {
+                    dt.column(0).search("Clinical studies and trials").draw();
+                    this.active( true );
+                    table.button( 0 ).active( false );
+                    table.button( 1 ).active( false );
+                    table.button( 2 ).active( false );
+                } );
+                table.button( 0 ).active( true );
+            });
+        </script>
     </head>
 
     <body class="dark-version black-bg">
@@ -95,7 +155,7 @@
                                 </li>
                                 <li class = "nav-item">
                                     <div class="damo-style-switch" id="switch-style">
-                                        <a href="./index.html" id="toggle-switcher" class="switch-button"><i class="fa fa-solid fa-moon"></i></a>
+                                        <a href="./index.html" id="toggle-switcher" class="switch-button"><i class="fa fa-solid fa-sun"></i></a>
                                     </div>
                                 </li>
                             </ul>
@@ -161,7 +221,7 @@
                                             <img src="./img/foto_wieditz.jpg"
                                                  class="img-fluid"
                                                  width="80%;"
-                                                 style="background-color: white;
+                                                 style="background-color: rgb(0, 0, 0);
                                                         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
                                                         display: block;"
                                                  align="middle"
@@ -233,6 +293,7 @@
                                     <li><span>java</span></li>
                                     <li><span>c++</span></li>
                                     <li><span>sas</span></li>
+                                    <li><span>matlab</span></li>
                                     <li><span>sql</span></li>
                                     <li><span>git</span></li>
                                     <li><span>markdown</span></li>
@@ -320,7 +381,7 @@
                                     <!-- University Goettingen PhD-->
                                     <div class="jw-education-item dark-bg wow fadeInUp" data-wow-duration="0.8s" data-wow-delay="0.3s">
                                         <h4><div style="float:right; margin-top=-20px;"><a href="https://www.uni-goettingen.de/en/1.html">University of Göttingen</a></div>Doctor rerum naturalium in Mathematical Sciences</h4>
-                                        <div class="jw-eduyear">2017–2021</div>
+                                        <div class="jw-eduyear">2016–2017</div>
                                         <ul class="education-responsibility">
                                             <li><i class="fa fa-solid fa-angles-right"></i>Thesis title: <a target="_blank" href="http://hdl.handle.net/21.11130/00-1735-0000-0008-5951-9"> Characteristic and necessary minutiae in fingerprints.</a></li>
                                             <li><i class="fa fa-solid fa-angles-right"></i>Supervisor: <a target="_blank"
@@ -362,11 +423,13 @@
             </div>
         </section>
 
-         <!--
+
+        <!--
         ===================
            PUBLICATIONS
         ===================
         -->
+
         <section class="jw-publication" id="jw-publication">
             <div class="color-overlay">
                 <div class="container">
@@ -383,256 +446,313 @@
                             </div>
 
                             <div class="part jw-publication-container col-sm-12 col-md-12">
-                                <div class="publication-nav col-sm-12" id="filter-button" style="margin-top: 20px; line-height: 4;">
-                                    <ul>
-                                        <li data-filter="*" class="current wow fadeInUp" style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.1s; animation-name: fadeInUp;"> <span>All Categories</span></li>
-                                        <li data-filter=".journal" class="wow fadeInUp" style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.2s; animation-name: fadeInUp;"> <span>Journal publications</span></li>
-                                        <li data-filter=".inproceedings" class="wow fadeInUp" style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.3s; animation-name: fadeInUp;"> <span>Conference proceedings</span></li>
-                                        <li data-filter=".clinical-trial" class="wow fadeInUp" style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.4s; animation-name: fadeInUp;"> <span>Clinical studies and trials</span></li>
-                                    </ul>
-                                </div>
-                                <div class="jw-project-gallery col-sm-12 wow fadeIn"
-                                     id="project-gallery"
-                                     data-wow-duration="0.8s"
-                                     data-wow-delay="0.2s"
-                                     style="visibility: visible; animation-duration: 0.8s; animation-delay: 0.5s; animation-name: fadeInUp;">
 
-                                    <div class="publicationContainer row">
-                                        <div class="grid-item col-sm-12 clinical-trial">
-                                            <div class="jw-publication-item dark-bg">
-                                                <a data-fancybox="" data-src="#jw-bloodculture"><h4><div style="float:right; margin-top=-20px;">2022</div> Blood Culture Headspace Gas Analysis Enables Early Detection of Escherichia coli Bacteremia in an Animal Model of Sepsis</h4></a>
-                                                <div class="jw-publication-description">
-                                                    Maximilian Euler, Thorsten Perl, Isabell Eickel, Anna Dudakova, Esther Maguilla Rosado,
-                                                    Carolin Drees, Wolfgang Vautz, <b>Johannes Wieditz</b>, Konrad Meissner, Nils Kunze-Szikszay
-                                                    <br class='newline' /><span class='cmcsc-10x-x-109'><a target="_blank" href="https://www.mdpi.com/2079-6382/11/8/992"><i>Antibiotics</i> 11.8 (2022): 992</a>.</span>
-                                                        <span class='small-caps'>bibTeX:</span> <a target="_blank"
-                                                        href='./files/bib/euler2020blood.bib'>download</a>.
+                                <table id="table_id" class="" style="width:100%; padding-bottom: 10px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Publication</th> <th>Year </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td data-search="Clinical studies and trials">
+                                                <div class="grid-item col-sm-11 clinical-trial" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <div class="jw-publication-item dark-bg">
+                                                        <a data-fancybox="" data-src="#jw-hyperthermia"><h4>Modeling iatrogenic, intraoperative hyperthermia from external warming in children: a pooled analysis from two prospective observational studies</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            Clemens&nbsp;Miller, Anselm&nbsp;Bräuer, <b>Johannes&nbsp;Wieditz</b>, Katharina&nbsp;Klose, Carla&nbsp;Pancaro, Marcus&nbsp;Nemeth <br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://onlinelibrary.wiley.com/doi/10.1111/pan.14580"><i>Pediatric Anesthesia</i> (2022)</a>.</span>
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/miller2022modeling.bib'>download</a>.
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="grid-item journal">
-                                            <div class="jw-publication-item dark-bg">
-                                                <a data-fancybox="" data-src="#jw-characteristic"><h4><div style="float:right; margin-top=-20px;">2022</div>Characteristic and necessary minutiae in fingerprints</h4></a>
-                                                <div class="jw-publication-description">
-                                                    <b>Johannes Wieditz</b>, Yvo Pokern, Dominic Schuhmacher, Stephan Huckemann
-                                                    <br class='newline' />
-                                                    <span class='cmcsc-10x-x-109'>
-                                                        <a target="_blank"
-                                                           href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssc.12520"><i>Journal of the Royal Statistical Society: Series C</i> 71.1 (2022): 27-50</a>.
-                                                    <span class='small-caps'>arXiv</span></span>:
-                                                    <a target="_blank" href="https://arxiv.org/abs/2009.07910">2009.07910</a>.
-                                                    <span class='small-caps'>
-                                                        bibTeX:</span> <a target="_blank"
-                                                        href='./files/bib/wieditz2020characteristic.bib'>download</a>.
+                                            </td>
+                                             <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2022</h5>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-search="Clinical studies and trials">
+                                                <div class="grid-item col-sm-11 clinical-trial" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <div class="jw-publication-item dark-bg">
+                                                        <a data-fancybox="" data-src="#jw-bloodculture"><h4>Blood Culture Headspace Gas Analysis Enables Early Detection of Escherichia coli Bacteremia in an Animal Model of Sepsis</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            Maximilian&nbsp;Euler, Thorsten&nbsp;Perl, Isabell&nbsp;Eickel, Anna&nbsp;Dudakova, Esther&nbsp;Maguilla&nbsp;Rosado, Carolin&nbsp;Drees, Wolfgang&nbsp;Vautz, <b>Johannes&nbsp;Wieditz</b>, Konrad&nbsp;Meissner, Nils&nbsp;Kunze-Szikszay <br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://www.mdpi.com/2079-6382/11/8/992"><i>Antibiotics</i> 11.8 (2022): 992</a>.</span>
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/euler2022blood.bib'>download</a>.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2022</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-search="Journal publications">
+                                                <div class="grid-item col-sm-11 journal" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <div class="jw-publication-item dark-bg">
+                                                        <a data-fancybox="" data-src="#jw-characteristic"><h4>Characteristic and necessary minutiae in fingerprints</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            <b>Johannes&nbsp;Wieditz</b>, Yvo&nbsp;Pokern, Dominic&nbsp;Schuhmacher, Stephan&nbsp;Huckemann <br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssc.12520"><i>Journal of the Royal Statistical Society: Series C</i> 71.1 (2022): 27-50</a>.
+                                                            <span class='small-caps'>arXiv</span></span>:<a target="_blank" href="https://arxiv.org/abs/2009.07910">2009.07910</a>.
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/wieditz2020characteristic.bib'>download</a>.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                             <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2022</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-search="Journal publications">
+                                                <div class="grid-item col-sm-11 journal" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <div class="jw-publication-item dark-bg">
+                                                        <a data-fancybox="" data-src="#jw-sbb"><h4>An algorithm for computing Fréchet means on the sphere</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            Gabriele&nbsp;Eichfelder, Thomas&nbsp;Hotz, <b>Johannes&nbsp;Wieditz</b><br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://link.springer.com/article/10.1007/s11590-019-01415-y"><i>Optimization Letters</i> 11.7 (2019): 1523-1533</a>.</span>
+                                                            <span class='small-caps'>arXiv</span>: <a target="_blank" href="https://arxiv.org/abs/1802.09243">1802.09243</a>.
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/eichfelder2019algorithm.bib'>download</a>.
+                                                        </div>
+                                                    </div>
+                                               </div>
+                                            </td>
+                                            <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2019</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-search="Journal publications">
+                                                <p hidden>Non-Asymptotic Confidence Sets for Circular Means</p>
+                                                <div class="grid-item col-sm-11 journal" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <div class="jw-publication-item dark-bg">
+                                                        <a data-fancybox="" data-src="#jw-non-asymptotic-confidence-sets"><h4>Non-Asymptotic Confidence Sets for Circular Means</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            Thomas&nbsp;Hotz, Florian&nbsp;Kelma, <b>Johannes&nbsp;Wieditz</b><br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://www.mdpi.com/1099-4300/18/10/375"><i>Entropy</i> 18.10 (2016): 375</a>.</span>
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/hotz2016non-asymptotic.bib'>download</a>.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                             <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2016</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td data-search="Conference proceedings">
+                                                <div class="grid-item col-sm-11 inproceedings" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                     <div class="jw-publication-item dark-bg">
+                                                       <a data-fancybox="" data-src="#jw-universal"> <h4>Universal, non-asymptotic confidence sets for circular means</h4></a>
+                                                        <div class="jw-publication-description">
+                                                            Thomas&nbsp;Hotz, Florian&nbsp;Kelma, <b>Johannes&nbsp;Wieditz</b><br class='newline' />
+                                                            <span class='cmcsc-10x-x-109'><a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-25040-3_68"><i>International Conference on Geometric Science of Information</i>. Springer, Cham, 2015</a>.</span>
+                                                            <span class='small-caps'>bibTeX:</span> <a target="_blank" href='./files/bib/hotz2015universal.bib'>download</a>.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                             <td>
+                                                <div class="grid-item" data-wow-duration="0.8s" data-wow-delay="0.2s">
+                                                    <h5>2015</h5>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                        <div class="grid-item journal">
-                                            <div class="jw-publication-item dark-bg">
-                                                <a data-fancybox="" data-src="#jw-sbb"><h4><div style="float:right; margin-top=-20px;">2019</div>An algorithm for computing Fréchet means on
-                                                        the sphere</h4></a>
-                                                <div class="jw-publication-description">
-                                                    Gabriele Eichfelder, Thomas Hotz, <b>Johannes Wieditz</b><br class='newline' />
-                                                    <span class='cmcsc-10x-x-109'><a target="_blank" href="https://link.springer.com/article/10.1007/s11590-019-01415-y"><i>Optimization
-                                                        Letters</i> 13.7 (2019): 1523-1533</a>.</span>
-                                                    <span class='small-caps'>arXiv</span>:
-                                                    <a target="_blank" href="https://arxiv.org/abs/1802.09243">1802.09243</a>.
-                                                    <span class='small-caps'>
-                                                        bibTeX:</span> <a target="_blank"
-                                                        href='./files/bib/eichfelder2019algorithm.bib'>download</a>.
-                                                </div>
-                                            </div>
-                                       </div>
+                <div class="jw-publication-modal" id="jw-hyperthermia">
+                    <div class="container">
+                        <div class="row jw-publication-modal-inner">
+                            <h2>Modeling iatrogenic, intraoperative hyperthermia from external warming in children: a pooled analysis from two prospective observational studies</h2>
+                            <h6>Abstract</h6>
+                            <p style="margin-top: -15px;">
+                                <ul>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Background:</b> Maintenance of normothermia is an important quality metric in pediatric anesthesia. While inadvertent hypothermia is effectively prevented by forced-air warming, this therapeutic approach can lead to iatrogenic hyperthermia in young children.</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Aims:</b> To estimate the influence of external warming by forced-air on the development of intraoperative hyperthermia in anesthetized children aged 6 years or younger.</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Methods:</b> We pooled data from two previous clinical studies. Primary outcome was the course of core temperature over time analyzed by a quadratic regression model. Secondary outcomes were the incidence of hyperthermia (body core temperature >38°C), the probability of hyperthermia over the length of warming in relation to age and surface-area-to-weight ratio, respectively, analyzed by multiple logistic regression models. The influence of baseline temperature on hyperthermia was estimated using a Cox proportional hazards model.</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Results:</b> 200 children (55 female) with a median age of 2.1 [1st–3rd quartile 1–4.2] years were analyzed. Mean temperature increased by 0.43°C after one hour, 0.64°C after two hours and reached a peak of 0.66°C at 147 minutes. Overall, 33 children were hyperthermic at least one measurement point. The odds ratios of hyperthermia were 1.14 (95%-CI: 1.07–1.22) or 1.13 (95%-CI: 1.06–1.21) for every ten minutes of warming therapy in a model with age or surface-area-to weight ratio (ceteris paribus), respectively. Odds ratio was 1.33 (95%-CI: 1.07–1.71) for a decrease of one year in age and 1.63 (95%-CI: 0.93–2.83) for an increase of 0.01 in the surface-to-weight-area ratio (ceteris paribus). An increase of 0.1°C in baseline temperature increased the hazard of becoming hyperthermic by a factor of 1.33 (95%-CI: 1.23–1.43).</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Conclusions:</b> In children, external warming by forced-air needs to be closely monitored and adjusted in a timely manner to avoid iatrogenic hyperthermia especially during long procedures, in young age, higher surface-area-to-weight ratio and higher baseline temperature.</p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <div class="col-sm-12" style="margin-bottom: 5px;">
+                                <a target="_blank"
+                                   href="https://onlinelibrary.wiley.com/doi/full/10.1111/pan.14580"
+                                   class="btn btn-fill">To the article</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                                        <div class="grid-item journal">
-                                            <div class="jw-publication-item dark-bg">
-                                                <a data-fancybox="" data-src="#jw-non-asymptotic-confidence-sets"><h4><div style="float:right; margin-top=-20px;">2016</div>Non-Asymptotic Confidence Sets for Circular Means</h4></a>
-                                                <div class="jw-publication-description">
-                                                    Thomas Hotz, Florian Kelma, <b>Johannes Wieditz</b><br
-                                                        class='newline' />
-                                                    <span class='cmcsc-10x-x-109'><a target="_blank"
-                                                            href="https://www.mdpi.com/1099-4300/18/10/375"><i>Entropy</i> 18.10
-                                                            (2016): 375</a>.</span>
-                                                    <span class='small-caps'>
-                                                        bibTeX:</span> <a target="_blank"
-                                                        href='./files/bib/hotz2016non-asymptotic.bib'>download</a>.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="grid-item inproceedings">
-                                             <div class="jw-publication-item dark-bg">
-                                               <a data-fancybox="" data-src="#jw-universal"> <h4><div style="float:right; margin-top=-20px;">2015</div>Universal, non-asymptotic confidence sets for circular means</h4></a>
-                                                <div class="jw-publication-description">
-                                                    Thomas Hotz, Florian Kelma, <b>Johannes Wieditz</b><br
-                                                        class='newline' />
-                                                    <span class='cmcsc-10x-x-109'><a target="_blank"
-                                                            href="https://link.springer.com/chapter/10.1007/978-3-319-25040-3_68"><i>International
-                                                                Conference on Geometric Science of Information</i>. Springer,
-                                                            Cham, 2015</a>.</span>
-                                                    <span class='small-caps'>
-                                                        bibTeX:</span> <a target="_blank"
-                                                        href='./files/bib/hotz2015universal.bib'>download</a>.
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div> <!-- End: .grid .project-gallery -->
-                            </div> <!-- End: .grid .project-gallery -->
-                        </div> <!-- End: .part -->
-                    </div> <!-- End: .row -->
+                <div class="jw-publication-modal" id="jw-bloodculture">
+                    <div class="container">
+                        <div class="row jw-publication-modal-inner">
+                            <h2>Blood Culture Headspace Gas Analysis Enables Early Detection of Escherichia coli Bacteremia in an Animal Model of Sepsis</h2>
+                            <h6>Abstract</h6>
+                            <p style="margin-top: -15px;">
+                                <ul>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Background:</b> Automated blood culture headspace analysis for the detection of volatile organic compounds of microbial origin (mVOC) could be a non-invasive method for bedside rapid pathogen identification. We investigated whether analyzing the gaseous headspace of blood culture (BC) bottles through gas chromatography-ion mobility spectrometry (GC-IMS) enables differentiation of infected and non-infected.</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Methods:</b> BC were gained out of a rabbit model, with sepsis induced by intravenous administration of E. coli (EC group; n = 6) and control group (n = 6) receiving sterile LB medium intravenously. After 10 h, a pair of blood cultures was obtained and incubated for 36 h. The headspace from aerobic and anaerobic BC was sampled every two hours using an autosampler and analyzed using a GC-IMS device. MALDI-TOF MS was performed to confirm or exclude microbial growth in BCs.</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Results:</b> Signal intensities (SI) of 113 mVOC peak regions were statistically
+    analyzed. In 24 regions, the SI trends differed between the groups and were considered to be useful
+    for differentiation. The principal component analysis showed differentiation between EC and control
+    group after 6 h, with 62.2% of the data variance described by the principal components 1 and 2. Single
+    peak regions, for example peak region P_15, show significant SI differences after 6 h in the anaerobic
+    environment (p < 0.001) and after 8 h in the aerobic environment (p < 0.001).</p>
+                                    </li>
+                                    <li>
+                                        <p><i class="fa fa-solid fa-angles-right"></i> <b>Conclusions:</b> The
+    results are promising and warrant further evaluation in studies with an extended microbial panel
+    and indications concerning its transferability to human samples.</p>
+                                    </li>
+                                </ul>
+                            </p>
+                            <div class="col-sm-12" style="margin-bottom: 5px;">
+                                <a target="_blank"
+                                   href="https://www.mdpi.com/2079-6382/11/8/992"
+                                   class="btn btn-fill">To the article</a>
+                            </div>
+                    </div>
                 </div>
             </div>
-            <div class="jw-publication-modal" id="jw-bloodculture">
+
+             <div class="jw-publication-modal" id="jw-characteristic">
                 <div class="container">
                     <div class="row jw-publication-modal-inner">
-                        <h2>Blood Culture Headspace Gas Analysis Enables Early Detection of Escherichia coli Bacteremia in an Animal Model of Sepsis</h2>
+                        <h2>Characteristic and necessary minutiae in fingerprints</h2>
                         <h6>Abstract</h6>
-                        <p style="margin-top: -15px;">
-                            <ul>
-                                <li>
-                                    <p><i class="fa fa-solid fa-angles-right"></i> <b>Background:</b> Automated blood culture headspace analysis for the detection of volatile
-organic compounds of microbial origin (mVOC) could be a non-invasive method for bedside rapid
-pathogen identification. We investigated whether analyzing the gaseous headspace of blood culture
-(BC) bottles through gas chromatography-ion mobility spectrometry (GC-IMS) enables differentiation
-of infected and non-infected.</p>
-                                </li>
-                                <li>
-                                    <p><i class="fa fa-solid fa-angles-right"></i> <b>Methods:</b> BC were gained out of a rabbit model, with sepsis induced
-by intravenous administration of E. coli (EC group; n = 6) and control group (n = 6) receiving sterile LB
-medium intravenously. After 10 h, a pair of blood cultures was obtained and incubated for 36 h. The
-headspace from aerobic and anaerobic BC was sampled every two hours using an autosampler and
-analyzed using a GC-IMS device. MALDI-TOF MS was performed to confirm or exclude microbial
-growth in BCs.</p>
-                                </li>
-                                <li>
-                                    <p><i class="fa fa-solid fa-angles-right"></i> <b>Results:</b> Signal intensities (SI) of 113 mVOC peak regions were statistically
-analyzed. In 24 regions, the SI trends differed between the groups and were considered to be useful
-for differentiation. The principal component analysis showed differentiation between EC and control
-group after 6 h, with 62.2% of the data variance described by the principal components 1 and 2. Single
-peak regions, for example peak region P_15, show significant SI differences after 6 h in the anaerobic
-environment (p < 0.001) and after 8 h in the aerobic environment (p < 0.001).</p>
-                                </li>
-                                <li>
-                                    <p><i class="fa fa-solid fa-angles-right"></i> <b>Conclusions:</b> The
-results are promising and warrant further evaluation in studies with an extended microbial panel
-and indications concerning its transferability to human samples.</p>
-                                </li>
-                            </ul>
+                        <p>
+                            Fingerprints feature a ridge pattern with moderately varying ridge
+                            frequency (RF), following an orientation field (OF), which usually
+                            features some singularities. Additionally, at some points, called
+                            minutiae, ridge lines end or fork and this point pattern is usually
+                            used for fingerprint identification and authentication. Whenever
+                            the OF features divergent ridge lines (e.g. near singularities), a
+                            nearly constant RF necessitates the generation of more ridge lines,
+                            originating at minutiae. We call these the necessary minutiae. It
+                            turns out that fingerprints feature additional minutiae which occur
+                            at rather arbitrary locations. We call these the random minutiae or,
+                            since they may convey fingerprint individuality beyond the OF, the
+                            characteristic minutiae. In consequence, the minutiae point pattern
+                            is assumed to be a realization of the superposition of two stochastic
+                            point processes: a Strauss point process (whose activity function is
+                            given by the divergence field) with an additional hard core, and a
+                            homogeneous Poisson point process, modelling the necessary and the
+                            characteristic minutiae, respectively. We perform Bayesian inference
+                            using an MCMC-based minutiae separating algorithm (MiSeal). In
+                            simulations, it provides good mixing and good estimation of underlying
+                            parameters. In application to fingerprints, we can separate the two
+                            minutiae patterns and verify by example of two different prints with
+                            similar OF that characteristic minutiae convey fingerprint individuality.
                         </p>
                         <div class="col-sm-12" style="margin-bottom: 5px;">
                             <a target="_blank"
-                               href="https://www.mdpi.com/2079-6382/11/8/992"
+                               href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssc.12520"
                                class="btn btn-fill">To the article</a>
                         </div>
-                </div>
-            </div>
-        </div>
-
-         <div class="jw-publication-modal" id="jw-characteristic">
-            <div class="container">
-                <div class="row jw-publication-modal-inner">
-                    <h2>Characteristic and necessary minutiae in fingerprints</h2>
-                    <h6>Abstract</h6>
-                    <p>
-                        Fingerprints feature a ridge pattern with moderately varying ridge
-                        frequency (RF), following an orientation field (OF), which usually
-                        features some singularities. Additionally, at some points, called
-                        minutiae, ridge lines end or fork and this point pattern is usually
-                        used for fingerprint identification and authentication. Whenever
-                        the OF features divergent ridge lines (e.g. near singularities), a
-                        nearly constant RF necessitates the generation of more ridge lines,
-                        originating at minutiae. We call these the necessary minutiae. It
-                        turns out that fingerprints feature additional minutiae which occur
-                        at rather arbitrary locations. We call these the random minutiae or,
-                        since they may convey fingerprint individuality beyond the OF, the
-                        characteristic minutiae. In consequence, the minutiae point pattern
-                        is assumed to be a realization of the superposition of two stochastic
-                        point processes: a Strauss point process (whose activity function is
-                        given by the divergence field) with an additional hard core, and a
-                        homogeneous Poisson point process, modelling the necessary and the
-                        characteristic minutiae, respectively. We perform Bayesian inference
-                        using an MCMC-based minutiae separating algorithm (MiSeal). In
-                        simulations, it provides good mixing and good estimation of underlying
-                        parameters. In application to fingerprints, we can separate the two
-                        minutiae patterns and verify by example of two different prints with
-                        similar OF that characteristic minutiae convey fingerprint individuality.
-                    </p>
-                    <div class="col-sm-12" style="margin-bottom: 5px;">
-                        <a target="_blank"
-                           href="https://rss.onlinelibrary.wiley.com/doi/10.1111/rssc.12520"
-                           class="btn btn-fill">To the article</a>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="jw-publication-modal" id="jw-sbb">
-            <div class="container">
-                <div class="row jw-publication-modal-inner">
-                    <h2>An algorithm for computing Fréchet means on the sphere</h2>
-                    <h6>Abstract</h6>
-                    <p>
-                        For most optimisation methods an essential assumption
-                        is the vector space structure of the feasible set. This condition is not
-                        fulfilled if we consider optimisation problems over the sphere. We
-                        present an algorithm for solving a special global problem over the
-                        sphere, namely the determination of Fréchet means, which are points
-                        minimising the mean distance to a given set of points. The Branch and
-                        Bound method derived needs no further assumptions on the input data, but
-                        is able to cope with this objective function which is neither convex nor
-                        differentiable. The algorithm’s performance is tested on simulated and
-                        real data.
-                    </p>
-                    <div class="col-sm-12" style="margin-bottom: 5px;">
-                        <a target="_blank"
-                           href="https://link.springer.com/article/10.1007/s11590-019-01415-y"
-                           class="btn btn-fill">To the article</a>
+            <div class="jw-publication-modal" id="jw-sbb">
+                <div class="container">
+                    <div class="row jw-publication-modal-inner">
+                        <h2>An algorithm for computing Fréchet means on the sphere</h2>
+                        <h6>Abstract</h6>
+                        <p>
+                            For most optimisation methods an essential assumption
+                            is the vector space structure of the feasible set. This condition is not
+                            fulfilled if we consider optimisation problems over the sphere. We
+                            present an algorithm for solving a special global problem over the
+                            sphere, namely the determination of Fréchet means, which are points
+                            minimising the mean distance to a given set of points. The Branch and
+                            Bound method derived needs no further assumptions on the input data, but
+                            is able to cope with this objective function which is neither convex nor
+                            differentiable. The algorithm’s performance is tested on simulated and
+                            real data.
+                        </p>
+                        <div class="col-sm-12" style="margin-bottom: 5px;">
+                            <a target="_blank"
+                               href="https://link.springer.com/article/10.1007/s11590-019-01415-y"
+                               class="btn btn-fill">To the article</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="jw-publication-modal" id="jw-non-asymptotic-confidence-sets">
-            <div class="container">
-                <div class="row jw-publication-modal-inner">
-                    <h2>Non-Asymptotic Confidence Sets for Circular Means</h2>
-                    <h6>Abstract</h6>
-                    <p>
-                    The mean of data on the unit circle is defined as the
-                    minimizer of the average squared Euclidean distance to the data. Based
-                    on Hoeffding’s mass concentration inequalities, non-asymptotic
-                    confidence sets for circular means are constructed which are universal
-                    in the sense that they require no distributional assumptions. These are
-                    then compared with asymptotic confidence sets in simulations and for a
-                    real data set.
-                    </p>
-                    <div class="col-sm-12" style="margin-bottom: 5px;">
-                        <a target="_blank"
-                           href="https://www.mdpi.com/1099-4300/18/10/375"
-                           class="btn btn-fill">To the article</a>
+            <div class="jw-publication-modal" id="jw-non-asymptotic-confidence-sets">
+                <div class="container">
+                    <div class="row jw-publication-modal-inner">
+                        <h2>Non-Asymptotic Confidence Sets for Circular Means</h2>
+                        <h6>Abstract</h6>
+                        <p>
+                        The mean of data on the unit circle is defined as the
+                        minimizer of the average squared Euclidean distance to the data. Based
+                        on Hoeffding’s mass concentration inequalities, non-asymptotic
+                        confidence sets for circular means are constructed which are universal
+                        in the sense that they require no distributional assumptions. These are
+                        then compared with asymptotic confidence sets in simulations and for a
+                        real data set.
+                        </p>
+                        <div class="col-sm-12" style="margin-bottom: 5px;">
+                            <a target="_blank"
+                               href="https://www.mdpi.com/1099-4300/18/10/375"
+                               class="btn btn-fill">To the article</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="jw-publication-modal" id="jw-universal">
-            <div class="container">
-                <div class="row jw-publication-modal-inner">
-                    <h2>Universal, non-asymptotic confidence sets for circular means</h2>
-                    <h6>Abstract</h6>
-                    <p>
-                    Based on Hoeffding’s mass concentration inequalities,
-                    non-asymptotic confidence sets for circular means are constructed which
-                    are universal in the sense that they require no distributional
-                    assumptions. These are then compared with asymptotic confidence sets in
-                    simulations and for a real data set.
-                    </p>
-                    <div class="col-sm-12">
-                        <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-25040-3_68" class="btn btn-fill">To the article</a>
+            <div class="jw-publication-modal" id="jw-universal">
+                <div class="container">
+                    <div class="row jw-publication-modal-inner">
+                        <h2>Universal, non-asymptotic confidence sets for circular means</h2>
+                        <h6>Abstract</h6>
+                        <p>
+                        Based on Hoeffding’s mass concentration inequalities,
+                        non-asymptotic confidence sets for circular means are constructed which
+                        are universal in the sense that they require no distributional
+                        assumptions. These are then compared with asymptotic confidence sets in
+                        simulations and for a real data set.
+                        </p>
+                        <div class="col-sm-12">
+                            <a target="_blank" href="https://link.springer.com/chapter/10.1007/978-3-319-25040-3_68" class="btn btn-fill">To the article</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <!--
@@ -662,7 +782,7 @@ and indications concerning its transferability to human samples.</p>
                                     <li data-app-prevent-settings="" data-target="#jw-software" data-slide-to="2"></li>
                                 </ol>
                                 <div class="carousel-inner" role="listbox">
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item">
                                         <div class="container container-slide">
                                             <div class="row">
                                                 <div class="col-sm-8">
@@ -682,7 +802,7 @@ and indications concerning its transferability to human samples.</p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="carousel-item">
+                                    <div class="carousel-item active">
                                         <div class="container container-slide">
                                             <div class="row">
                                                 <div class="col-sm-8">
@@ -967,12 +1087,16 @@ and indications concerning its transferability to human samples.</p>
                                 <ul class="event-list">
                                     <h4>2022</h4>
                                     <li>
-                                        <div class="event-date">Jun</div>
-                                        <div class="event-info"><b>4th RUHR School of Modern Epidemiology</b>, Essen, Germany (Virtual Event). <br>Topic: Introduction to Machine Learning and Causal Inference.</div>
+                                        <div class="event-date">Sep</div>
+                                        <div class="event-info"><b>EU-Forschungsförderung: Neue Fördermöglichkeiten im Bereich Gesundheit</b>, Hannover, Germany.</div>
                                     </li>
                                     <li>
                                         <div class="event-date">Jun</div>
-                                        <div class="event-info"><b>Wissenschaftliche Arbeitstage Schmerzmedizin der DGAI</b>, Göttingen, Germany. <br>Talk: Tipps für die zielgerichtete Studienplanung.</div>
+                                        <div class="event-info"><b>4th RUHR School of Modern Epidemiology</b>, Essen, Germany (Virtual Event).<br>Topic: Introduction to Machine Learning and Causal Inference.</div>
+                                    </li>
+                                    <li>
+                                        <div class="event-date">Jun</div>
+                                        <div class="event-info"><b>Wissenschaftliche Arbeitstage Schmerzmedizin der DGAI</b>, Göttingen, Germany.<br>Talk: Tipps für die zielgerichtete Studienplanung.</div>
                                     </li>
                                     <br>
                                     <h4>2021</h4>
@@ -1072,9 +1196,9 @@ and indications concerning its transferability to human samples.</p>
                                         <div class="each-info media-body">
                                             <h4>Office</h4>
                                             <address style="font-weight: normal;">
-                                                Room C 0.125 <br>
+                                                <a>Room C 0.125 <br>
                                                 Von-Siebold-Straße 3, <br>
-                                                37075 Göttingen, Germany
+                                                37075 Göttingen, Germany</a>
                                             </address>
                                         </div>
                                     </div>
@@ -1129,7 +1253,7 @@ and indications concerning its transferability to human samples.</p>
         ==============
         -->
         <!-- jQuery-->
-        <script src="./js/jquery.min.js"></script>
+<!--        <script src="./js/jquery.min.js"></script>-->
         <!-- bootstrap-->
         <script src="./js/bootstrap.min.js"></script>
         <!-- wow-->
@@ -1142,8 +1266,14 @@ and indications concerning its transferability to human samples.</p>
         <script src="./js/isotope.pkgd.js"></script>
         <!-- Custom Scripts-->
         <script src="./js/custom-scripts.js"></script>
+<!--        <script type="text/javascript" src="./js/pagination.js"></script>-->
+
+<!--        <script type="text/javascript" src="./js/cards.js"></script>-->
+<!--        <script type="text/javascript" charset="utf8" src="/DataTables/datatables.js"></script>-->
         <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
         <script type="text/javascript" src="./js/footer.js" defer></script>
 
     </body>
+
+
 </html>
