@@ -1288,6 +1288,10 @@ button:focus {
        LATEST
     ==============
 */
+.jw-latest {
+  padding-left: 50px;
+}
+
 .jw-latest .jw-latest-item {
   padding: 20px;
   border-radius: 4px;
