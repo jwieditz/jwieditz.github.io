@@ -9,7 +9,7 @@ class Footer extends HTMLElement {
         <div class="col-sm-12 jw-copyright" style="margin-top: -7px;" >
             <div class="row">
                 <div class = "col-sm-8">
-                    <span class='text-muted' style="font-size: 14px; text-align: center; vertical-align: top;"> ` + new Date().getFullYear() + `. Johannes Wieditz. Department of Medical Statistics • Department of Anaesthesiology. University Medical Centre Göttingen. All rights reserved.
+                    <span class='text-muted' style="font-size: 14px; text-align: center; vertical-align: top;"> ` + 2025 + `. Johannes Wieditz. Department of Medical Statistics • Department of Anaesthesiology. University Medical Centre Göttingen. All rights reserved.
                 </div>
                 <div class="col-sm-4">
                     <ul class="social-icon" style="vertical-align: top; margin-top: 0px;">
